@@ -15,6 +15,13 @@ export default defineEventHandler(async (event) => {
   const expectedUsername = config.HTTPSWRD_USERNAME
   const expectedPassword = config.HTTPSWRD_PASSWORD
 
+  console.log('🔐 check-httpswrd:', {
+    username: body.username,
+    password: body.password,
+    expectedUsername,
+    expectedPassword,
+  })
+
   if (
     body.username !== expectedUsername
     || body.password !== expectedPassword
