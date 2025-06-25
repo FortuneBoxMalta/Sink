@@ -2,36 +2,25 @@ import { defineEventHandler, useRuntimeConfig } from '#imports'
 import { readBody } from 'h3'
 
 export default defineEventHandler(async (event) => {
-  if (event.method !== 'POST') {
-    return {
-      success: false,
-      error: 'Method Not Allowed',
-    }
-  }
-
   const body = await readBody<{ username: string, password: string }>(event)
   const config = useRuntimeConfig()
 
-  const expectedUsername = config.HTTPSWRD_USERNAME
-  const expectedPassword = config.HTTPSWRD_PASSWORD
-
-  console.log('🔐 check-httpswrd:', {
-    username: body.username,
-    password: body.password,
-    expectedUsername,
-    expectedPassword,
-  })
+  console.log('🔍 check-httpswrd BODY:', body)
+  console.log('🔐 config USERNAME:', config.HTTPSWRD_USERNAME)
+  console.log('🔐 config PASSWORD:', config.HTTPSWRD_PASSWORD)
 
   if (
-    body.username !== expectedUsername
-    || body.password !== expectedPassword
+    body.username !== config.HTTPSWRD_USERNAME
+    || body.password !== config.HTTPSWRD_PASSWORD
   ) {
+    console.log('❌ Unauthorized attempt')
     return {
       success: false,
       error: 'Unauthorized',
     }
   }
 
+  console.log('✅ Authorized')
   return {
     success: true,
   }
