@@ -33,6 +33,9 @@ export default defineNuxtConfig({
     caseSensitive: false,
     listQueryLimit: 500,
     disableBotAccessLog: false,
+    HTTPSWRD_USERNAME: process.env.HTTPSWRD_USERNAME,
+    HTTPSWRD_PASSWORD: process.env.HTTPSWRD_PASSWORD,
+
     public: {
       previewMode: '',
       slugDefaultLength: '6',
