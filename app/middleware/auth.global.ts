@@ -1,19 +1,51 @@
+/* eslint-disable no-alert */
+
 export default defineNuxtRouteMiddleware(async (to) => {
   if (import.meta.server)
     return
 
-  if (to.path.startsWith('/dashboard') && to.path !== '/dashboard/login') {
-    if (!window.localStorage.getItem('SinkSiteToken'))
-      return navigateTo('/dashboard/login')
-  }
+  const isLoginPage = to.path === '/dashboard/login'
+  const isDashboardRoute = to.path.startsWith('/dashboard')
 
-  if (to.path === '/dashboard/login') {
+  // httpswrd access
+  if (isLoginPage) {
+    const alreadyAuthed = localStorage.getItem('httpswrd-ok')
+
+    if (!alreadyAuthed) {
+      const username = prompt('Username:')
+      const password = prompt('Password:')
+
+      try {
+        const res = await $fetch<{ success: boolean }>('/api/check-httpswrd', {
+          method: 'POST',
+          body: { username, password },
+        })
+
+        if (!res.success) {
+          alert('Unauthorized')
+          return navigateTo('/')
+        }
+
+        localStorage.setItem('httpswrd-ok', 'true')
+      }
+      catch {
+        alert('Login error')
+        return navigateTo('/')
+      }
+    }
+
     try {
       await useAPI('/api/verify')
       return navigateTo('/dashboard')
     }
-    catch (e) {
-      console.warn(e)
+    catch {
+    }
+  }
+
+  if (isDashboardRoute && !isLoginPage) {
+    const sinkToken = localStorage.getItem('SinkSiteToken')
+    if (!sinkToken) {
+      return navigateTo('/dashboard/login')
     }
   }
 })

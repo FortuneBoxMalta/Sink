@@ -1,9 +1,10 @@
+<script setup lang="ts">
+definePageMeta({
+  layout: false,
+  middleware: ['redirect-home'],
+})
+</script>
+
 <template>
-  <main class="flex flex-col justify-center">
-    <HomeTwitter />
-    <HomeHero />
-    <HomeFeatures />
-    <HomeLogos />
-    <HomeCta />
-  </main>
+  <div style="display: none" />
 </template>
