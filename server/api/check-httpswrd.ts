@@ -9,7 +9,6 @@ export default defineEventHandler(async (event) => {
     config = useRuntimeConfig()
   }
   catch (e) {
-    console.error('❌ useRuntimeConfig failed:', e)
     return {
       success: false,
       error: 'Server config error',
