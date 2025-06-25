@@ -53,6 +53,9 @@ export default defineNuxtConfig({
     '/dashboard': {
       redirect: '/dashboard/links',
     },
+    '/dashboard/login': {
+      ssr: true,
+    },
   },
 
   future: {
