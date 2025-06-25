@@ -3,6 +3,7 @@ import { currentLocales } from './i18n/i18n'
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+
   modules: [
     '@nuxthub/core',
     'shadcn-nuxt',
@@ -12,6 +13,7 @@ export default defineNuxtConfig({
     '@nuxtjs/color-mode',
     '@nuxtjs/i18n',
   ],
+  ssr: true,
 
   devtools: { enabled: true },
 
