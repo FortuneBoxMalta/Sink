@@ -6,6 +6,10 @@ export default defineEventHandler(async (event) => {
   const correctUsername = process.env.HTTPSWRD_USERNAME
   const correctPassword = process.env.HTTPSWRD_PASSWORD
 
+  console.log('Received:', body)
+  console.log('Expected USER:', correctUsername)
+  console.log('Expected PASS:', correctPassword)
+
   if (!correctUsername || !correctPassword) {
     return { success: false, error: 'Server misconfigured' }
   }
