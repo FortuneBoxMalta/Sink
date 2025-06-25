@@ -7,7 +7,6 @@ export default defineNuxtRouteMiddleware(async (to) => {
   const isLoginPage = to.path === '/dashboard/login'
   const isDashboardRoute = to.path.startsWith('/dashboard')
 
-  // httpswrd access
   if (isLoginPage) {
     const alreadyAuthed = localStorage.getItem('httpswrd-ok')
 
@@ -38,8 +37,7 @@ export default defineNuxtRouteMiddleware(async (to) => {
       await useAPI('/api/verify')
       return navigateTo('/dashboard')
     }
-    catch {
-    }
+    catch {}
   }
 
   if (isDashboardRoute && !isLoginPage) {
