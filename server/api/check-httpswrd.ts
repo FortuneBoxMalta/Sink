@@ -5,22 +5,27 @@ export default defineEventHandler(async (event) => {
   const body = await readBody<{ username: string, password: string }>(event)
   const config = useRuntimeConfig()
 
-  console.log('🔍 check-httpswrd BODY:', body)
-  console.log('🔐 config USERNAME:', config.HTTPSWRD_USERNAME)
-  console.log('🔐 config PASSWORD:', config.HTTPSWRD_PASSWORD)
+  console.log('🔍 BODY:', body)
+  console.log('🔐 CONFIG:', {
+    HTTPSWRD_USERNAME: config.HTTPSWRD_USERNAME,
+    HTTPSWRD_PASSWORD: config.HTTPSWRD_PASSWORD,
+  })
+
+  const expectedUsername = config.HTTPSWRD_USERNAME
+  const expectedPassword = config.HTTPSWRD_PASSWORD
 
   if (
-    body.username !== config.HTTPSWRD_USERNAME
-    || body.password !== config.HTTPSWRD_PASSWORD
+    body.username !== expectedUsername
+    || body.password !== expectedPassword
   ) {
-    console.log('❌ Unauthorized attempt')
+    console.log('❌ Unauthorized login attempt')
     return {
       success: false,
       error: 'Unauthorized',
     }
   }
 
-  console.log('✅ Authorized')
+  console.log('✅ Authorized login')
   return {
     success: true,
   }
