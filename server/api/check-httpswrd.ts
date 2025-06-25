@@ -14,5 +14,12 @@ export default defineEventHandler(async (event) => {
   return {
     success: authorized,
     error: authorized ? undefined : 'Unauthorized',
+    debug: {
+      received: body,
+      expected: {
+        username: expectedUsername,
+        password: expectedPassword,
+      },
+    },
   }
 })
